@@ -1,11 +1,11 @@
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js'
 // Change code below this line
 
-const gallery = document.querySelector(".gallery");
+const gallery = document.querySelector('.gallery')
 
 const elementsList = galleryItems.reduce(
-  (acc, { preview, original, description }) =>
-    (acc += `<div class="gallery__item">
+    (acc, { preview, original, description }) =>
+        (acc += `<div class="gallery__item">
       <a class="gallery__link" href=${original}>
         <img
           class="gallery__image"
@@ -15,40 +15,42 @@ const elementsList = galleryItems.reduce(
         />
       </a>
     </div>`),
-  ""
-);
+    ''
+)
 
-gallery.innerHTML = elementsList;
+gallery.innerHTML = elementsList
 /* gallery.insertAdjacentHTML("beforeend", elementsList); */
 
-gallery.addEventListener("click", galleryHandler);
+gallery.addEventListener('click', galleryHandler)
 
-let instance;
+let instance
 
 function galleryHandler(event) {
-  stopDefaultAction(event);
+    stopDefaultAction(event)
 
-  const { target } = event;
+    const { target } = event
 
-  if (target.nodeName !== "IMG") {
-    return;
-  }
+    if (target.nodeName !== 'IMG') {
+        return
+    }
 
-  instance = basicLightbox.create(
-    `<img src=${target.dataset.source} width='800' height='600'>`
-  );
+    instance = basicLightbox.create(
+        `<img src=${target.dataset.source} width='800' height='600'>`
+    )
 
-  instance.show();
-  gallery.addEventListener("keydown", buttonClickCheck);
+    instance.show()
+    document.addEventListener('keydown', buttonClickCheck)
 }
 
 function buttonClickCheck({ key }) {
-  if (key === "Escape" || !basicLightbox.visible()) {
-    gallery.removeEventListener("keydown", buttonClickCheck);
-    instance.close();
-  }
+    if (key === 'Escape' || !basicLightbox.visible()) {
+        document.removeEventListener('keydown', buttonClickCheck)
+        instance.close()
+        return
+    }
+    console.log(key)
 }
 
 function stopDefaultAction(evt) {
-  evt.preventDefault();
+    evt.preventDefault()
 }
